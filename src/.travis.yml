@@ -6,6 +6,20 @@ before_install:
     - docker build -t eppy25/d-react -f Dockerfile.dev .
 
 script:
-    - docker run -e CI=true eppy25/d-react run npm test
+    - docker run -e CI=true eppy25/d-react run npm test -- --coverage
 
 language: generic
+
+deploy:
+    provider: elasticbeanstalk
+    region: "us-east-2"
+    app: "d-react"
+    env: "DReact-env"
+    bucket_name: "elasticbeanstalk-us-east-2-250230085437"
+    bucket_path: "d-react"
+    on:
+        branch: master
+    access_key_id: $AWS_ACCESS_KEY
+    secret_access_key: $AWS_SECRET_KEY
+
+

@@ -1,0 +1,11 @@
+sudo: required
+services:
+    - docker
+
+before_install:
+    - docker build -t eppy25/d-react -f Dockerfile.dev .
+
+script:
+    - docker run -e CI=true eppy25/d-react run npm test
+
+language: generic
